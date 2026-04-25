@@ -1,7 +1,15 @@
-﻿{% extends 'base.html' %} {% load static %} {% block title %} {% if
-selected_category %} {{ selected_category.name }} Packages — Sri Narpavi
-Holidays {% else %} All Packages — Sri Narpavi Holidays {% endif %} {% endblock
-%} {% block content %}
+﻿{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {% if current_category %}
+        {{ current_category.name }} Packages — Sri Narpavi Holidays
+    {% else %}
+        All Packages — Sri Narpavi Holidays
+    {% endif %}
+{% endblock %}
+
+{% block content %}
 <!-- Page Header -->
 <section class="page-header">
   <div class="container">
@@ -11,19 +19,29 @@ Holidays {% else %} All Packages — Sri Narpavi Holidays {% endif %} {% endbloc
           <a href="{% url 'core:home' %}">Home</a>
         </li>
         <li class="breadcrumb-item active">
-          {% if selected_category %}{{ selected_category.name }}{% else %}All
-          Packages{% endif %}
+            {% if selected_category %}
+                {{ selected_category.name }}
+            {% else %}
+                All Packages
+            {% endif %}
         </li>
       </ol>
     </nav>
     <h1 class="page-header-title">
-      {% if selected_category %}{{ selected_category.name }} Packages{% else
-      %}All Packages{% endif %}
+        {% if selected_category %}
+            {{ selected_category.name }} Packages
+        {% else %}
+            All Packages
+        {% endif %}
     </h1>
     <p class="page-header-subtitle">
-      {% if invalid_category %} Invalid category selected {% elif not packages
-      %} No packages found {% else %} {{ packages|length }} Package{{
-      packages|length|pluralize }} available {% endif %}
+        {% if invalid_category %}
+            Invalid category selected
+        {% elif not packages %}
+            No packages found
+        {% else %}
+            {{ packages|length }} Package{{ packages|length|pluralize }} available
+        {% endif %}
     </p>
   </div>
 </section>
@@ -71,8 +89,7 @@ Holidays {% else %} All Packages — Sri Narpavi Holidays {% endif %} {% endbloc
             <span class="pkg-badge-cat">{{ package.category.name }}</span>
             {% if package.duration %}
             <span class="pkg-badge-dur">
-              <i class="fas fa-clock me-1" aria-hidden="true"></i>{{
-              package.duration }}
+              <i class="fas fa-clock me-1" aria-hidden="true"></i>{{package.duration }}
             </span>
             {% endif %}
           </div>
@@ -84,14 +101,8 @@ Holidays {% else %} All Packages — Sri Narpavi Holidays {% endif %} {% endbloc
               {{ package.description|truncatewords:20 }}
             </p>
             <div class="pkg-card-meta">
-              <span
-                ><i class="fas fa-users me-1" aria-hidden="true"></i>{{
-                package.group_size }}</span
-              >
-              <span
-                ><i class="fas fa-language me-1" aria-hidden="true"></i>{{
-                package.language }}</span
-              >
+              <span><i class="fas fa-users me-1" aria-hidden="true"></i>{{ package.group_size }}</span>
+              <span><i class="fas fa-language me-1" aria-hidden="true"></i>{{ package.language }}</span>
             </div>
             <div class="pkg-card-footer">
               <div>
@@ -127,12 +138,14 @@ Holidays {% else %} All Packages — Sri Narpavi Holidays {% endif %} {% endbloc
       ></i>
       <h4 class="text-muted">No Packages Found</h4>
       <p class="text-muted mb-4">
-        {% if invalid_category %} The selected category is invalid. Please
-        choose a category from the filters. {% elif selected_category %} No
-        active packages in <strong>{{ selected_category.name }}</strong> yet. {%
-        else %} No packages available at the moment. Check back soon! {% endif
-        %}
-      </p>
+        {% if invalid_category %}
+            The selected category is invalid. Please choose a category from the filters.
+        {% elif selected_category %}
+            No active packages in <strong>{{ selected_category.name }}</strong> yet.
+        {% else %}
+            No packages available at the moment. Check back soon!
+        {% endif %}
+    </p>
       <a
         href="{% url 'packages:list' %}"
         class="btn-hero-primary d-inline-block"
