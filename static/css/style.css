@@ -142,15 +142,10 @@ h6 {
 }
 
 .brand-logo {
-    width: 42px;
-    height: 42px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #f0cb57 0%, #d4af37 100%);
-    color: #2a3119;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 8px 20px rgba(212, 175, 55, 0.32);
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    flex-shrink: 0;
 }
 
 .brand-title {
@@ -1900,3 +1895,141 @@ h6 {
         .pkg-card-img-wrap { height: 190px; }
         .enquiry-form-inner { padding: 1.5rem 1rem; }
     }
+
+/* =====================================================
+   ENQUIRY SUBMISSION LOADING OVERLAY
+   ===================================================== */
+
+/* Backdrop */
+.enq-loading-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(26, 31, 18, 0.82);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+.enq-loading-overlay.active {
+    display: flex;
+}
+
+/* Card */
+.enq-loading-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    max-width: 440px;
+    width: 100%;
+    padding: 2.5rem 2rem 2rem;
+    text-align: center;
+    animation: enqCardIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+@keyframes enqCardIn {
+    from { opacity: 0; transform: translateY(24px) scale(0.95); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Icon stage */
+.enq-loading-icon-stage {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+}
+
+/* Spinner ring */
+.enq-loading-spinner {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 3px solid rgba(212, 175, 55, 0.2);
+    border-top-color: var(--gold-10);
+    animation: enqSpin 1s linear infinite;
+}
+@keyframes enqSpin {
+    to { transform: rotate(360deg); }
+}
+
+/* Plane icon */
+.enq-loading-plane {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    color: var(--olive-20);
+    animation: enqPlaneBob 2s ease-in-out infinite;
+}
+@keyframes enqPlaneBob {
+    0%, 100% { transform: translateY(0) rotate(-5deg); }
+    50%       { transform: translateY(-5px) rotate(5deg); }
+}
+
+/* Heading */
+.enq-loading-heading {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 0.4rem;
+}
+
+/* Progress dots */
+.enq-loading-dots span {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--gold-10);
+    margin: 0 3px;
+    animation: enqDotPulse 1.2s ease-in-out infinite;
+}
+.enq-loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+.enq-loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes enqDotPulse {
+    0%, 80%, 100% { transform: scale(0.7); opacity: 0.5; }
+    40%           { transform: scale(1.1); opacity: 1; }
+}
+
+/* Divider */
+.enq-loading-divider {
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--olive-20), var(--gold-10));
+    border-radius: 2px;
+    margin: 1rem auto;
+}
+
+/* Tip box */
+.enq-loading-tip-box {
+    background: var(--bg-80);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 1rem;
+    min-height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+.enq-loading-tip {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    transition: opacity 0.4s ease;
+}
+.enq-loading-tip.fading { opacity: 0; }
+
+/* Warning note */
+.enq-loading-note {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+.enq-loading-note i { color: var(--olive-500); }

@@ -4,6 +4,20 @@ from django.utils.html import format_html
 from .models import HeroImage
 
 
+def activate_hero_images(modeladmin, request, queryset):
+    updated = queryset.update(is_active=True)
+    modeladmin.message_user(request, f"{updated} hero image(s) activated.")
+
+
+def deactivate_hero_images(modeladmin, request, queryset):
+    updated = queryset.update(is_active=False)
+    modeladmin.message_user(request, f"{updated} hero image(s) deactivated.")
+
+
+activate_hero_images.short_description = "Activate selected hero images"
+deactivate_hero_images.short_description = "Deactivate selected hero images"
+
+
 @admin.register(HeroImage)
 class HeroImageAdmin(admin.ModelAdmin):
     list_display = [
@@ -18,6 +32,9 @@ class HeroImageAdmin(admin.ModelAdmin):
     list_filter = ["is_active", "created_at"]
     search_fields = ["title"]
     ordering = ["order", "-created_at"]
+    list_per_page = 20
+    save_on_top = True
+    actions = [activate_hero_images, deactivate_hero_images]
     readonly_fields = ["created_at", "image_preview"]
     fields = ["image", "image_preview", "title", "is_active", "order", "created_at"]
 

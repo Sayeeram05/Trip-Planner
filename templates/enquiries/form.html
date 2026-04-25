@@ -167,4 +167,69 @@
   </div>
 </section>
 
+<!-- Enquiry Submission Loading Overlay -->
+<div class="enq-loading-overlay" id="enqLoadingOverlay" role="status" aria-live="polite" aria-label="Submitting your enquiry, please wait">
+  <div class="enq-loading-card">
+    <div class="enq-loading-icon-stage">
+      <div class="enq-loading-spinner"></div>
+      <div class="enq-loading-plane"><i class="fas fa-plane-departure" aria-hidden="true"></i></div>
+    </div>
+    <h2 class="enq-loading-heading">Submitting Your Enquiry</h2>
+    <div class="enq-loading-dots mb-2">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="enq-loading-divider"></div>
+    <div class="enq-loading-tip-box">
+      <p class="enq-loading-tip" id="enqLoadingTip">Our team is reviewing your request&hellip;</p>
+    </div>
+    <p class="enq-loading-note">
+      <i class="fas fa-lock" aria-hidden="true"></i>
+      Please don&rsquo;t close or refresh this tab
+    </p>
+  </div>
+</div>
+
+<script>
+(function () {
+  var tips = [
+    "Our team is reviewing your request\u2026",
+    "Did you know? India has 40 UNESCO World Heritage Sites!",
+    "Packing tip: Roll your clothes to save luggage space.",
+    "Fun fact: Kerala has over 900\u00a0km of backwater canals!",
+    "We\u2019ll send a confirmation email to your inbox shortly.",
+    "Best time for hill stations is March\u2013May \u2014 plan ahead!"
+  ];
+  var tipIndex = 0;
+  var tipEl = document.getElementById("enqLoadingTip");
+  var overlay = document.getElementById("enqLoadingOverlay");
+  var form = document.querySelector(".enquiry-form-inner form");
+  var submitBtn = form ? form.querySelector('button[type="submit"]') : null;
+
+  if (form) {
+    form.addEventListener("submit", function (e) {
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        e.preventDefault();
+        return;
+      }
+      // Valid — show overlay and lock submit button
+      overlay.classList.add("active");
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2" aria-hidden="true"></i>Submitting&hellip;';
+      }
+      // Rotate tips every 3 seconds
+      setInterval(function () {
+        tipEl.classList.add("fading");
+        setTimeout(function () {
+          tipIndex = (tipIndex + 1) % tips.length;
+          tipEl.textContent = tips[tipIndex];
+          tipEl.classList.remove("fading");
+        }, 400);
+      }, 3000);
+    });
+  }
+})();
+</script>
+
 {% endblock %}

@@ -9,6 +9,7 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display_links = ["image_preview", "name"]
     search_fields = ["name", "description"]
     ordering = ["name"]
+    list_per_page = 20
     readonly_fields = ["created_at", "image_preview"]
     fields = ["name", "description", "image", "image_preview", "created_at"]
 

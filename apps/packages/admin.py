@@ -9,6 +9,7 @@ class ItineraryInline(admin.TabularInline):
     extra = 2
     fields = ["day_number", "title", "description"]
     ordering = ["day_number"]
+    show_change_link = True
 
 
 class PackageImageInline(admin.TabularInline):
@@ -29,6 +30,20 @@ class PackageImageInline(admin.TabularInline):
     image_preview.short_description = "Preview"
 
 
+def activate_packages(modeladmin, request, queryset):
+    updated = queryset.update(is_active=True)
+    modeladmin.message_user(request, f"{updated} package(s) activated.")
+
+
+def deactivate_packages(modeladmin, request, queryset):
+    updated = queryset.update(is_active=False)
+    modeladmin.message_user(request, f"{updated} package(s) deactivated.")
+
+
+activate_packages.short_description = "Activate selected packages"
+deactivate_packages.short_description = "Deactivate selected packages"
+
+
 @admin.register(Package)
 class PackageAdmin(admin.ModelAdmin):
     inlines = [PackageImageInline, ItineraryInline]
@@ -37,7 +52,7 @@ class PackageAdmin(admin.ModelAdmin):
         "title",
         "category",
         "duration",
-        "price",
+        "price_display",
         "is_active",
         "created_at",
     ]
@@ -45,6 +60,9 @@ class PackageAdmin(admin.ModelAdmin):
     list_filter = ["category", "is_active", "created_at"]
     search_fields = ["title", "description"]
     list_editable = ["is_active"]
+    list_per_page = 20
+    save_on_top = True
+    actions = [activate_packages, deactivate_packages]
     readonly_fields = ["created_at", "image_preview"]
     fieldsets = (
         (
@@ -69,6 +87,14 @@ class PackageAdmin(admin.ModelAdmin):
 
     image_preview.short_description = "Preview"
 
+    def price_display(self, obj):
+        if obj.price is not None:
+            return format_html("<strong>₹{:,.0f}</strong>", obj.price)
+        return "—"
+
+    price_display.short_description = "Price"
+    price_display.admin_order_field = "price"
+
 
 @admin.register(Itinerary)
 class ItineraryAdmin(admin.ModelAdmin):
@@ -76,3 +102,4 @@ class ItineraryAdmin(admin.ModelAdmin):
     list_filter = ["package"]
     search_fields = ["title", "description"]
     ordering = ["package", "day_number"]
+    list_per_page = 25
