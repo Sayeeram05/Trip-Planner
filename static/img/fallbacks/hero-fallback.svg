@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" role="img" aria-label="Sri Narpavi Holidays fallback hero image">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#253018" />
+      <stop offset="52%" stop-color="#4E5B31" />
+      <stop offset="100%" stop-color="#D4AF37" stop-opacity="0.85" />
+    </linearGradient>
+    <linearGradient id="overlay" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#11160d" stop-opacity="0.75" />
+      <stop offset="100%" stop-color="#11160d" stop-opacity="0.15" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)" />
+  <rect width="1920" height="1080" fill="url(#overlay)" />
+
+  <g fill="#ffffff" fill-opacity="0.15">
+    <circle cx="320" cy="860" r="220" />
+    <circle cx="1650" cy="240" r="190" />
+  </g>
+
+  <g fill="#ffffff" fill-opacity="0.9" font-family="Manrope, Segoe UI, sans-serif">
+    <text x="160" y="470" font-size="54" font-weight="700" letter-spacing="1.5">Sri Narpavi Holidays</text>
+    <text x="160" y="545" font-size="34" font-weight="500">Premium journeys, curated with care.</text>
+  </g>
+</svg>

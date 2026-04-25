@@ -1,0 +1,242 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Sri Narpavi Holidays - Your Dream Journey Awaits{% endblock %}
+{% block body_class %}home-page{% endblock %}
+
+{% block content %}
+
+<section class="hero-section" aria-label="Hero carousel">
+    <div class="hero-carousel" id="heroCarousel" tabindex="0" aria-roledescription="carousel" aria-label="Featured destinations">
+        {% if hero_slides %}
+            {% for slide in hero_slides %}
+            <article class="hero-slide {% if forloop.first %}active{% endif %}" data-slide-index="{{ forloop.counter0 }}" aria-hidden="{% if forloop.first %}false{% else %}true{% endif %}">
+                <img src="{{ slide.image.url }}" alt="{{ slide.title|default:'Sri Narpavi Holidays hero destination' }}" class="hero-slide-img img-theme" {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %} decoding="async">
+            </article>
+            {% endfor %}
+        {% else %}
+            <article class="hero-slide active" data-slide-index="0" aria-hidden="false">
+                <img src="{% static 'img/fallbacks/hero-fallback.svg' %}" alt="Sri Narpavi Holidays" class="hero-slide-img img-theme" fetchpriority="high" decoding="async">
+            </article>
+        {% endif %}
+    </div>
+
+    <div class="hero-overlay" aria-hidden="true"></div>
+
+    <div class="container hero-content">
+        <div class="row align-items-end g-4">
+            <div class="col-lg-7">
+                <p class="hero-eyebrow reveal"><i class="fas fa-compass me-2" aria-hidden="true"></i>Premium curated escapes</p>
+                <h1 class="hero-title reveal reveal-delay-1">Discover The World,<span>Tailored For You</span></h1>
+                <p class="hero-subtitle reveal reveal-delay-2">
+                    Sri Narpavi Holidays crafts seamless journeys with personalized itineraries,
+                    trusted local expertise, and elevated comfort from start to return.
+                </p>
+                <div class="hero-cta-group reveal reveal-delay-3">
+                    <a href="{% url 'packages:list' %}" class="btn-hero-primary" aria-label="Explore travel packages">Explore Packages</a>
+                    <a href="{% url 'categories:list' %}" class="btn-hero-secondary" aria-label="Browse package categories">Browse Categories</a>
+                </div>
+            </div>
+
+            <div class="col-lg-5">
+                <div class="hero-stats-card reveal reveal-delay-4">
+                    <div class="row g-2 text-center">
+                        <div class="col-6 col-md-3 col-lg-6">
+                            <div class="stat-pill">
+                                <span class="stat-value" data-count="500">500+</span>
+                                <span class="stat-label">Happy Travellers</span>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3 col-lg-6">
+                            <div class="stat-pill">
+                                <span class="stat-value" data-count="50">50+</span>
+                                <span class="stat-label">Destinations</span>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3 col-lg-6">
+                            <div class="stat-pill">
+                                <span class="stat-value" data-count="10">10+</span>
+                                <span class="stat-label">Years Expertise</span>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3 col-lg-6">
+                            <div class="stat-pill">
+                                <span class="stat-value" data-count="100">100%</span>
+                                <span class="stat-label">Satisfaction</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero-dots" role="tablist" aria-label="Hero slide controls">
+        {% if hero_slides %}
+            {% for slide in hero_slides %}
+            <button class="hero-dot {% if forloop.first %}active{% endif %}" type="button" data-slide="{{ forloop.counter0 }}" role="tab" aria-label="Slide {{ forloop.counter }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"></button>
+            {% endfor %}
+        {% else %}
+            <button class="hero-dot active" type="button" data-slide="0" role="tab" aria-label="Slide 1" aria-selected="true"></button>
+        {% endif %}
+    </div>
+</section>
+
+<section class="features-strip" aria-label="Travel features">
+    <div class="container">
+        <div class="row g-3">
+            <div class="col-6 col-lg-3 reveal"><div class="feature-item"><i class="fas fa-tags" aria-hidden="true"></i><div><h6>Best Price Guarantee</h6><p>Transparent rates and premium value</p></div></div></div>
+            <div class="col-6 col-lg-3 reveal reveal-delay-1"><div class="feature-item"><i class="fas fa-user-check" aria-hidden="true"></i><div><h6>Expert Local Guides</h6><p>Trusted guides at every destination</p></div></div></div>
+            <div class="col-6 col-lg-3 reveal reveal-delay-2"><div class="feature-item"><i class="fas fa-headset" aria-hidden="true"></i><div><h6>24/7 Trip Support</h6><p>Always available during your journey</p></div></div></div>
+            <div class="col-6 col-lg-3 reveal reveal-delay-3"><div class="feature-item"><i class="fas fa-shield-heart" aria-hidden="true"></i><div><h6>Safe And Secure</h6><p>Reliable partners and verified stays</p></div></div></div>
+        </div>
+    </div>
+</section>
+
+{% if categories %}
+<section class="section-padding">
+    <div class="container">
+        <div class="section-head reveal">
+            <div>
+                <p class="section-eyebrow">Choose your experience</p>
+                <h2 class="section-title-left">Top Categories</h2>
+            </div>
+            <a href="{% url 'categories:list' %}" class="btn-view-all">View All Categories <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+        </div>
+
+        <div class="row g-4">
+            {% for category in categories %}
+            <div class="col-6 col-md-4 col-xl-2 reveal reveal-delay-{{ forloop.counter }}">
+                <a href="{% url 'packages:list' %}?category={{ category.id }}" class="category-card" aria-label="Explore {{ category.name }} packages">
+                    {% if category.display_image %}
+                    <img src="{{ category.display_image }}" alt="{{ category.name }}" class="category-card-img img-theme" loading="lazy" decoding="async">
+                    {% else %}
+                    <div class="category-card-fallback" aria-hidden="true"><i class="fas fa-map-location-dot"></i></div>
+                    {% endif %}
+                    <div class="category-card-overlay"></div>
+                    <div class="category-card-body">
+                        <h3>{{ category.name }}</h3>
+                        <p>{{ category.active_package_count }} Package{{ category.active_package_count|pluralize }}</p>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% if featured_packages %}
+<section class="section-padding section-alt">
+    <div class="container">
+        <div class="section-head reveal">
+            <div>
+                <p class="section-eyebrow">Luxury itineraries</p>
+                <h2 class="section-title-left">Featured Packages</h2>
+            </div>
+            <a href="{% url 'packages:list' %}" class="btn-view-all">View All Packages <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+        </div>
+
+        <div class="row g-4">
+            {% for package in featured_packages %}
+            <div class="col-sm-6 col-xl-4 reveal reveal-delay-{{ forloop.counter }}">
+                <article class="package-card h-100">
+                    <div class="package-card-img-wrap">
+                        {% if package.image %}
+                        <img src="{{ package.image.url }}" alt="{{ package.title }}" class="package-card-img img-theme" loading="lazy" decoding="async">
+                        {% else %}
+                        <div class="package-card-fallback" aria-hidden="true"><i class="fas fa-mountain-sun"></i></div>
+                        {% endif %}
+                        <div class="package-img-overlay"></div>
+                        <span class="package-badge">{{ package.category.name }}</span>
+                        {% if package.duration %}<span class="duration-badge"><i class="fas fa-clock me-1"></i>{{ package.duration }}</span>{% endif %}
+                    </div>
+                    <div class="package-card-body">
+                        <h3>{{ package.title }}</h3>
+                        <p>{{ package.description|truncatewords:18 }}</p>
+                        <div class="package-meta">
+                            {% if package.group_size %}<span><i class="fas fa-users me-1"></i>{{ package.group_size }}</span>{% endif %}
+                            {% if package.language %}<span><i class="fas fa-language me-1"></i>{{ package.language }}</span>{% endif %}
+                        </div>
+                        <div class="package-footer">
+                            <div>
+                                {% if package.price %}
+                                <strong class="price">₹{{ package.price|floatformat:0 }}</strong>
+                                <small>/ person</small>
+                                {% else %}
+                                <small class="text-muted">Price on request</small>
+                                {% endif %}
+                            </div>
+                            <a href="{% url 'packages:detail' package.id %}" class="btn-card-detail" aria-label="View {{ package.title }} details">View Details</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% if featured_packages %}
+<section class="section-padding">
+    <div class="container">
+        <div class="section-head reveal">
+            <div>
+                <p class="section-eyebrow">Image gallery</p>
+                <h2 class="section-title-left">Destinations We Love</h2>
+            </div>
+        </div>
+
+        <div class="destination-gallery reveal">
+            {% for package in featured_packages|slice:":5" %}
+            <a href="{% url 'packages:detail' package.id %}" class="dest-card" aria-label="Open {{ package.title }}">
+                {% if package.image %}
+                <img src="{{ package.image.url }}" alt="{{ package.title }}" class="dest-img img-theme" loading="lazy" decoding="async">
+                {% else %}
+                <div class="dest-fallback" aria-hidden="true"><i class="fas fa-location-dot"></i></div>
+                {% endif %}
+                <div class="dest-overlay"></div>
+                <div class="dest-content">
+                    <h3>{{ package.title }}</h3>
+                    <p><i class="fas fa-map-marker-alt me-1"></i>{{ package.category.name }}</p>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<section class="section-padding section-alt">
+    <div class="container">
+        <div class="section-head reveal">
+            <div>
+                <p class="section-eyebrow">Why travellers choose us</p>
+                <h2 class="section-title-left">Premium Service, Personal Touch</h2>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-sm-6 col-xl-3 reveal"><div class="why-card"><i class="fas fa-route"></i><h4>Custom Itineraries</h4><p>Journeys personalized around your interests and travel pace.</p></div></div>
+            <div class="col-sm-6 col-xl-3 reveal reveal-delay-1"><div class="why-card"><i class="fas fa-star"></i><h4>Curated Stays</h4><p>Carefully chosen accommodations for comfort and character.</p></div></div>
+            <div class="col-sm-6 col-xl-3 reveal reveal-delay-2"><div class="why-card"><i class="fas fa-headset"></i><h4>Always Supported</h4><p>Fast assistance from planning stage to trip completion.</p></div></div>
+            <div class="col-sm-6 col-xl-3 reveal reveal-delay-3"><div class="why-card"><i class="fas fa-leaf"></i><h4>Responsible Travel</h4><p>Thoughtful itineraries that respect local communities.</p></div></div>
+        </div>
+    </div>
+</section>
+
+<section class="cta-section">
+    <div class="cta-overlay"></div>
+    <div class="container text-center cta-content reveal">
+        <p class="section-eyebrow">Ready to start your journey?</p>
+        <h2 class="cta-title">Plan Your Dream Trip Today</h2>
+        <p class="cta-subtitle">Talk to our travel specialists and receive a personalized itinerary tailored to your style and budget.</p>
+        <a href="{% url 'packages:list' %}" class="btn-hero-primary">Start Planning</a>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/home.js' %}"></script>
+{% endblock %}

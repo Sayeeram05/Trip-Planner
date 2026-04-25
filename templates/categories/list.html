@@ -1,0 +1,84 @@
+﻿{% extends 'base.html' %} {% load static %} {% block title %}Travel Categories —
+Sri Narpavi Holidays{% endblock %} {% block content %}
+
+<!-- Page Header -->
+<section class="page-header">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb breadcrumb-light">
+        <li class="breadcrumb-item">
+          <a href="{% url 'core:home' %}">Home</a>
+        </li>
+        <li class="breadcrumb-item active">Categories</li>
+      </ol>
+    </nav>
+    <h1 class="page-header-title">Travel Categories</h1>
+    <p class="page-header-subtitle">
+      Explore our diverse collection of curated travel experiences
+    </p>
+  </div>
+</section>
+
+<!-- Categories Grid -->
+<section class="section-padding">
+  <div class="container">
+    {% if categories %}
+    <div class="row g-4">
+      {% for category in categories %}
+      <div class="col-sm-6 col-lg-4 reveal reveal-delay-{{ forloop.counter }}">
+        <a
+          href="{% url 'packages:list' %}?category={{ category.id }}"
+          class="cat-card"
+          aria-label="Browse {{ category.name }} packages"
+        >
+          <div class="cat-card-img-wrap img-theme-wrap">
+            <img
+              src="{% if category.image %}{{ category.image.url }}{% else %}{% static 'images/default.jpg' %}{% endif %}"
+              alt="{{ category.name }}"
+              class="img-theme"
+              loading="lazy"
+            />
+            <div class="cat-card-overlay"></div>
+            <span class="cat-card-count-badge">
+              <i class="fas fa-suitcase me-1" aria-hidden="true"></i>
+              {{ category.active_package_count }} Package{{
+              category.active_package_count|pluralize }}
+            </span>
+          </div>
+
+          <div class="cat-card-body">
+            <h3 class="cat-card-title">{{ category.name }}</h3>
+            {% if category.description %}
+            <p class="cat-card-desc">
+              {{ category.description|truncatewords:14 }}
+            </p>
+            {% else %}
+            <p class="cat-card-desc">
+              Explore our handpicked {{ category.name }} travel packages.
+            </p>
+            {% endif %}
+            <span class="cat-card-cta"
+              >Explore <i class="fas fa-arrow-right ms-1" aria-hidden="true"></i
+            ></span>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state text-center py-5">
+      <i
+        class="fas fa-folder-open fa-4x mb-4"
+        style="color: #d4af37; opacity: 0.5"
+        aria-hidden="true"
+      ></i>
+      <h4 class="text-muted">No Categories Yet</h4>
+      <p class="text-muted">
+        Categories will appear here once added by the admin.
+      </p>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}

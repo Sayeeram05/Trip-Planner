@@ -1,0 +1,267 @@
+﻿{% extends 'base.html' %} {% load static %} {% block title %}{{ package.title }}
+— Sri Narpavi Holidays{% endblock %} {% block content %}
+
+<!-- Page Header -->
+<section class="page-header">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb breadcrumb-light">
+        <li class="breadcrumb-item">
+          <a href="{% url 'core:home' %}">Home</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a href="{% url 'packages:list' %}">Packages</a>
+        </li>
+        <li class="breadcrumb-item active">{{ package.title }}</li>
+      </ol>
+    </nav>
+    <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+      <span class="detail-badge-category">{{ package.category.name }}</span>
+    </div>
+    <h1 class="page-header-title">{{ package.title }}</h1>
+  </div>
+</section>
+
+<!-- Package Detail Content -->
+<section class="section-padding">
+  <div class="container">
+    <div class="row g-5">
+      <!-- ===== LEFT: Main Content ===== -->
+      <div class="col-lg-8">
+        <!-- Gallery / Hero Image -->
+        {% if gallery %}
+        <div class="pkg-gallery mb-4">
+          <div class="pkg-gallery-main img-theme-wrap" id="galleryMainWrap">
+            <img
+              src="{{ gallery.0.image.url }}"
+              alt="{{ gallery.0.caption|default:package.title }}"
+              class="img-theme"
+              id="galleryMainImg"
+              loading="eager"
+            />
+            <div class="pkg-gallery-gradient"></div>
+          </div>
+          {% if gallery|length > 1 %}
+          <div
+            class="pkg-gallery-strip"
+            role="list"
+            aria-label="Package image gallery"
+          >
+            {% for img in gallery %}
+            <button
+              class="pkg-gallery-thumb {% if forloop.first %}active{% endif %}"
+              onclick="pkgGallerySwitch('{{ img.image.url }}', '{{ img.caption|default:package.title }}', this)"
+              role="listitem"
+              aria-label="{{ img.caption|default:package.title }}"
+            >
+              <img
+                src="{{ img.image.url }}"
+                alt="{{ img.caption|default:package.title }}"
+                loading="lazy"
+              />
+            </button>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+
+        {% elif package.image %}
+        <div class="pkg-gallery mb-4">
+          <div class="pkg-gallery-main img-theme-wrap">
+            <img
+              src="{{ package.image.url }}"
+              alt="{{ package.title }}"
+              class="img-theme"
+              loading="eager"
+            />
+            <div class="pkg-gallery-gradient"></div>
+          </div>
+        </div>
+
+        {% else %}
+        <div class="detail-hero-placeholder mb-4" aria-hidden="true">
+          <i class="fas fa-mountain"></i>
+        </div>
+        {% endif %}
+
+        <!-- Quick Info Pills -->
+        <div class="detail-info-pills mb-4">
+          <div class="info-pill">
+            <i class="fas fa-clock" aria-hidden="true"></i>
+            <div>
+              <span class="info-pill-label">Duration</span>
+              <span class="info-pill-value">{{ package.duration }}</span>
+            </div>
+          </div>
+          <div class="info-pill">
+            <i class="fas fa-users" aria-hidden="true"></i>
+            <div>
+              <span class="info-pill-label">Group Size</span>
+              <span class="info-pill-value">{{ package.group_size }}</span>
+            </div>
+          </div>
+          <div class="info-pill">
+            <i class="fas fa-language" aria-hidden="true"></i>
+            <div>
+              <span class="info-pill-label">Language</span>
+              <span class="info-pill-value">{{ package.language }}</span>
+            </div>
+          </div>
+          {% if package.price %}
+          <div class="info-pill">
+            <i class="fas fa-rupee-sign" aria-hidden="true"></i>
+            <div>
+              <span class="info-pill-label">Starting From</span>
+              <span class="info-pill-value" style="color: #d4af37"
+                >&#8377;{{ package.price|floatformat:0 }}</span
+              >
+            </div>
+          </div>
+          {% endif %}
+        </div>
+
+        <!-- Package Description -->
+        <div class="detail-section-card mb-4">
+          <h3 class="detail-section-title">
+            <i class="fas fa-info-circle me-2" aria-hidden="true"></i>About This
+            Package
+          </h3>
+          <p class="text-muted lh-lg mb-0">{{ package.description }}</p>
+        </div>
+
+        <!-- Itinerary -->
+        {% if itineraries %}
+        <div class="detail-section-card">
+          <h3 class="detail-section-title">
+            <i class="fas fa-route me-2" aria-hidden="true"></i>Day-wise
+            Itinerary
+          </h3>
+          <p class="text-muted small mb-4">
+            <i class="fas fa-info-circle me-1" aria-hidden="true"></i>Click on
+            each day to expand.
+          </p>
+          <div class="accordion itinerary-accordion" id="itineraryAccordion">
+            {% for day in itineraries %}
+            <div class="accordion-item itinerary-item mb-2">
+              <h2 class="accordion-header" id="heading{{ day.day_number }}">
+                <button
+                  class="accordion-button {% if not forloop.first %}collapsed{% endif %} itinerary-btn"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapse{{ day.day_number }}"
+                  aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
+                  aria-controls="collapse{{ day.day_number }}"
+                >
+                  <span class="day-badge me-3">Day {{ day.day_number }}</span>
+                  <span class="itinerary-day-title">{{ day.title }}</span>
+                </button>
+              </h2>
+              <div
+                id="collapse{{ day.day_number }}"
+                class="accordion-collapse collapse {% if forloop.first %}show{% endif %}"
+                data-bs-parent="#itineraryAccordion"
+              >
+                <div class="accordion-body itinerary-body">
+                  <p class="mb-0 lh-lg">{{ day.description }}</p>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- ===== RIGHT: Sidebar ===== -->
+      <div class="col-lg-4">
+        <div class="detail-sidebar sticky-top" style="top: 90px">
+          <!-- Price Card -->
+          <div class="sidebar-card mb-4">
+            {% if package.price %}
+            <div class="sidebar-price-block text-center mb-4">
+              <p class="text-muted small mb-1">Starting from</p>
+              <h2 class="sidebar-price">
+                &#8377;{{ package.price|floatformat:0 }}
+              </h2>
+              <span class="text-muted small">per person</span>
+            </div>
+            <hr class="sidebar-divider" />
+            {% endif %}
+
+            <ul class="list-unstyled sidebar-info-list mb-4">
+              <li>
+                <i class="fas fa-clock" aria-hidden="true"></i>
+                <div>
+                  <small class="text-muted">Duration</small>
+                  <p class="fw-semibold mb-0">{{ package.duration }}</p>
+                </div>
+              </li>
+              <li>
+                <i class="fas fa-users" aria-hidden="true"></i>
+                <div>
+                  <small class="text-muted">Group Size</small>
+                  <p class="fw-semibold mb-0">{{ package.group_size }}</p>
+                </div>
+              </li>
+              <li>
+                <i class="fas fa-language" aria-hidden="true"></i>
+                <div>
+                  <small class="text-muted">Language</small>
+                  <p class="fw-semibold mb-0">{{ package.language }}</p>
+                </div>
+              </li>
+              <li>
+                <i class="fas fa-tag" aria-hidden="true"></i>
+                <div>
+                  <small class="text-muted">Category</small>
+                  <p class="fw-semibold mb-0">{{ package.category.name }}</p>
+                </div>
+              </li>
+              {% if itineraries %}
+              <li>
+                <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                <div>
+                  <small class="text-muted">Itinerary</small>
+                  <p class="fw-semibold mb-0">
+                    {{ itineraries.count }} Day{{ itineraries.count|pluralize }}
+                  </p>
+                </div>
+              </li>
+              {% endif %}
+            </ul>
+
+            <a
+              href="{% url 'enquiries:create' package.id %}"
+              class="btn-enquiry-sidebar w-100"
+            >
+              <i class="fas fa-paper-plane me-2" aria-hidden="true"></i>Send
+              Enquiry Now
+            </a>
+            <p class="text-center text-muted small mt-2 mb-0">
+              <i class="fas fa-lock me-1" aria-hidden="true"></i>Free
+              consultation &middot; No hidden charges
+            </p>
+          </div>
+
+          <!-- Trust Badges -->
+          <div class="sidebar-trust-badges">
+            <div class="trust-badge">
+              <i class="fas fa-shield-alt" aria-hidden="true"></i>
+              <span>Trusted &amp; Verified Agency</span>
+            </div>
+            <div class="trust-badge">
+              <i class="fas fa-headset" aria-hidden="true"></i>
+              <span>24/7 Customer Support</span>
+            </div>
+            <div class="trust-badge">
+              <i class="fas fa-rupee-sign" aria-hidden="true"></i>
+              <span>Best Price Guaranteed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

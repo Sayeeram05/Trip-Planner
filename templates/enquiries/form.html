@@ -1,0 +1,170 @@
+﻿{% extends 'base.html' %} {% load static %}
+{% block title %}Enquiry for {{ package.title }} — Sri Narpavi Holidays{% endblock %}
+{% block content %}
+
+<!-- Page Header -->
+<section class="page-header">
+  <div class="container">
+    <nav aria-label="breadcrumb" class="mb-3">
+      <ol class="breadcrumb breadcrumb-light">
+        <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'packages:detail' package.id %}">{{ package.title }}</a></li>
+        <li class="breadcrumb-item active">Enquiry</li>
+      </ol>
+    </nav>
+    <h1 class="page-header-title">Book Your Journey</h1>
+    <p class="page-header-subtitle">Fill in your details and we&#39;ll get back to you within 24 hours</p>
+  </div>
+</section>
+
+<!-- Enquiry Split Layout -->
+<section class="section-padding">
+  <div class="container">
+    <div class="enquiry-split-card">
+      <div class="row g-0">
+
+        <!-- LEFT: Image Panel -->
+        <div class="col-lg-5 d-none d-lg-block">
+          <div class="enquiry-img-panel img-theme-wrap">
+            {% if package.image %}
+            <img src="{{ package.image.url }}" alt="{{ package.title }}" class="img-theme" loading="lazy" />
+            {% else %}
+            <div class="enquiry-img-fallback" aria-hidden="true"><i class="fas fa-plane-departure"></i></div>
+            {% endif %}
+            <div class="enquiry-img-overlay"></div>
+            <div class="enquiry-img-content">
+              <span class="enquiry-img-badge">{{ package.category.name }}</span>
+              <h2 class="enquiry-img-title">{{ package.title }}</h2>
+              <div class="enquiry-img-meta">
+                {% if package.duration %}
+                <span><i class="fas fa-clock me-1" aria-hidden="true"></i>{{ package.duration }}</span>
+                {% endif %}
+                {% if package.price %}
+                <span><i class="fas fa-rupee-sign me-1" aria-hidden="true"></i>&#8377;{{ package.price|floatformat:0 }} / person</span>
+                {% endif %}
+              </div>
+              <!-- Trust indicators -->
+              <div class="enquiry-img-trust">
+                <div class="enq-trust-item"><i class="fas fa-shield-alt" aria-hidden="true"></i><span>Verified Agency</span></div>
+                <div class="enq-trust-item"><i class="fas fa-headset" aria-hidden="true"></i><span>24/7 Support</span></div>
+                <div class="enq-trust-item"><i class="fas fa-lock" aria-hidden="true"></i><span>100% Secure</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Form -->
+        <div class="col-lg-7">
+          <div class="enquiry-form-panel">
+            <div class="enquiry-form-inner">
+              <p class="section-eyebrow mb-1">Get in Touch</p>
+              <h3 class="enquiry-form-heading">Your Travel Details</h3>
+              <p class="text-muted mb-4">All fields are required unless marked optional.</p>
+
+              <form method="post" novalidate>
+                {% csrf_token %}
+
+                <!-- Row 1: Name + Phone -->
+                <div class="row g-3 mb-3">
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold" for="{{ form.full_name.id_for_label }}">
+                      <i class="fas fa-user me-1" style="color:#4e5b31" aria-hidden="true"></i>{{ form.full_name.label }}
+                    </label>
+                    {{ form.full_name }}
+                    {% if form.full_name.errors %}
+                    <div class="invalid-feedback d-block">{{ form.full_name.errors.0 }}</div>
+                    {% endif %}
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold" for="{{ form.phone.id_for_label }}">
+                      <i class="fas fa-phone me-1" style="color:#4e5b31" aria-hidden="true"></i>{{ form.phone.label }}
+                    </label>
+                    {{ form.phone }}
+                    {% if form.phone.errors %}
+                    <div class="invalid-feedback d-block">{{ form.phone.errors.0 }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+
+                <!-- Row 2: Email + Location -->
+                <div class="row g-3 mb-3">
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold" for="{{ form.email.id_for_label }}">
+                      <i class="fas fa-envelope me-1" style="color:#4e5b31" aria-hidden="true"></i>{{ form.email.label }}
+                    </label>
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                    <div class="invalid-feedback d-block">{{ form.email.errors.0 }}</div>
+                    {% endif %}
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold" for="{{ form.location.id_for_label }}">
+                      <i class="fas fa-map-marker-alt me-1" style="color:#4e5b31" aria-hidden="true"></i>{{ form.location.label }}
+                    </label>
+                    {{ form.location }}
+                    {% if form.location.errors %}
+                    <div class="invalid-feedback d-block">{{ form.location.errors.0 }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+
+                <!-- Destination (auto-filled) -->
+                <div class="mb-3">
+                  <label class="form-label fw-semibold" for="{{ form.destination.id_for_label }}">
+                    <i class="fas fa-plane-departure me-1" style="color:#4e5b31" aria-hidden="true"></i>
+                    {{ form.destination.label }}
+                    <span class="badge ms-1" style="background:#d4af37;color:#1a1a1a;font-size:.7rem;">Auto-filled</span>
+                  </label>
+                  {{ form.destination }}
+                  <div class="form-text text-muted">
+                    <i class="fas fa-lock me-1" aria-hidden="true"></i>Automatically filled from the selected package.
+                  </div>
+                </div>
+
+                <!-- Row 3: Travel Date + People -->
+                <div class="row g-3 mb-4">
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold" for="{{ form.travel_date.id_for_label }}">
+                      <i class="fas fa-calendar-alt me-1" style="color:#4e5b31" aria-hidden="true"></i>{{ form.travel_date.label }}
+                    </label>
+                    {{ form.travel_date }}
+                    {% if form.travel_date.errors %}
+                    <div class="invalid-feedback d-block">{{ form.travel_date.errors.0 }}</div>
+                    {% endif %}
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label fw-semibold" for="{{ form.people_count.id_for_label }}">
+                      <i class="fas fa-users me-1" style="color:#4e5b31" aria-hidden="true"></i>{{ form.people_count.label }}
+                    </label>
+                    {{ form.people_count }}
+                    {% if form.people_count.errors %}
+                    <div class="invalid-feedback d-block">{{ form.people_count.errors.0 }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+
+                {% if form.non_field_errors %}
+                <div class="alert alert-danger rounded-3">{{ form.non_field_errors }}</div>
+                {% endif %}
+
+                <!-- Submit -->
+                <div class="d-flex gap-3 flex-wrap">
+                  <button type="submit" class="btn-enquiry-submit">
+                    <i class="fas fa-paper-plane me-2" aria-hidden="true"></i>Submit Enquiry
+                  </button>
+                  <a href="{% url 'packages:detail' package.id %}" class="btn-back">
+                    <i class="fas fa-arrow-left me-1" aria-hidden="true"></i>Back
+                  </a>
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
