@@ -1,8 +1,22 @@
 from django import forms
+from django.core.exceptions import ValidationError
+from datetime import date
 from .models import Enquiry
 
 
 class EnquiryForm(forms.ModelForm):
+    def clean_travel_date(self):
+        travel_date = self.cleaned_data.get("travel_date")
+        if travel_date and travel_date < date.today():
+            raise ValidationError("Travel date must be in the future.")
+        return travel_date
+
+    def clean_people_count(self):
+        count = self.cleaned_data.get("people_count")
+        if count and (count < 1 or count > 50):
+            raise ValidationError("Enter a valid number of people (1-50).")
+        return count
+
     class Meta:
         model = Enquiry
         fields = [

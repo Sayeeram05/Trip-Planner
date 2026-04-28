@@ -1,8 +1,13 @@
+from django.http import JsonResponse
 from django.shortcuts import render
 from apps.packages.models import Package
 from apps.categories.models import Category
 from django.db.models import Count, Q
 from .models import HeroImage
+
+
+def health_check(request):
+    return JsonResponse({"status": "ok"})
 
 
 def home(request):

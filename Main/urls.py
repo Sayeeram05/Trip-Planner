@@ -13,7 +13,7 @@ admin.site.site_title = "SriNarpavi Admin"
 admin.site.index_title = "Welcome to SriNarpavi Holidays Portal"
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path("snh-portal/", admin.site.urls),
     path("", include("apps.core.urls")),
     path("categories/", include("apps.categories.urls")),
     path("packages/", include("apps.packages.urls")),

@@ -1,0 +1,440 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Fraunces:opsz,wght@9..144,700&display=swap");
+
+:root {
+    --snh-bg: #f3f6f8;
+    --snh-surface: #ffffff;
+    --snh-surface-soft: #f7fbf8;
+    --snh-text: #1f2937;
+    --snh-muted: #607285;
+    --snh-primary: #2f6c4f;
+    --snh-primary-strong: #24553e;
+    --snh-primary-soft: #e8f4ed;
+    --snh-accent: #f2c14e;
+    --snh-border: #dce6ef;
+    --snh-shadow: 0 14px 36px rgba(12, 35, 58, 0.08);
+}
+
+body,
+button,
+input,
+select,
+textarea {
+    font-family: "Manrope", "Segoe UI", sans-serif;
+}
+
+body,
+.content-wrapper,
+.main-footer {
+    background: radial-gradient(circle at top right, #ecf8f1 0%, rgba(236, 248, 241, 0) 38%), var(--snh-bg);
+    color: var(--snh-text);
+}
+
+.content-wrapper {
+    padding-bottom: 2rem;
+}
+
+.content-header h1 {
+    font-family: "Fraunces", "Times New Roman", serif;
+    font-weight: 700;
+    color: #174636;
+    letter-spacing: 0.2px;
+}
+
+.main-header .navbar {
+    background: linear-gradient(110deg, #1f4d39 0%, #2f6c4f 68%, #3f8864 100%) !important;
+    box-shadow: 0 10px 28px rgba(15, 58, 41, 0.28);
+    border-bottom: 0;
+}
+
+.main-header .navbar .nav-link,
+.main-header .navbar .navbar-nav .nav-link {
+    color: #f6fffb !important;
+    font-weight: 600;
+}
+
+.main-sidebar {
+    background: linear-gradient(180deg, #2a323a 0%, #20272f 100%) !important;
+}
+
+.brand-link {
+    background: linear-gradient(90deg, rgba(40, 87, 64, 0.88) 0%, rgba(28, 65, 47, 0.96) 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.brand-link .brand-text {
+    font-weight: 700;
+    color: #ebfff5;
+    letter-spacing: 0.3px;
+}
+
+.nav-sidebar .nav-link {
+    border-radius: 10px;
+    margin: 4px 10px;
+    color: #dce5ee;
+    transition: all 0.2s ease;
+}
+
+.nav-sidebar .nav-link:hover {
+    color: #ffffff;
+    background: rgba(75, 171, 122, 0.2);
+}
+
+.nav-sidebar .nav-link.active {
+    color: #effff6;
+    font-weight: 700;
+    background: linear-gradient(90deg, rgba(81, 176, 126, 0.56) 0%, rgba(60, 148, 104, 0.45) 100%) !important;
+    box-shadow: inset 3px 0 0 rgba(242, 193, 78, 0.95);
+}
+
+.main-sidebar .sidebar .form-control-sidebar,
+.main-sidebar .sidebar .btn-sidebar {
+    border-radius: 10px;
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.main-sidebar .sidebar .form-control-sidebar {
+    color: #ecf4fc;
+    background: rgba(255, 255, 255, 0.09);
+}
+
+.main-sidebar .sidebar .form-control-sidebar::placeholder {
+    color: #bed0e3;
+}
+
+.main-sidebar .sidebar .btn-sidebar {
+    background: rgba(255, 255, 255, 0.12);
+    color: #f6fbff;
+}
+
+.card,
+.small-box,
+.info-box {
+    border: 1px solid var(--snh-border);
+    border-radius: 14px;
+    box-shadow: var(--snh-shadow);
+    overflow: hidden;
+}
+
+.content-wrapper .card,
+.content-wrapper .small-box,
+.content-wrapper .info-box {
+    animation: snhRiseIn 420ms ease-out both;
+}
+
+.nav-sidebar .nav-link {
+    animation: snhFadeIn 260ms ease-out both;
+}
+
+@keyframes snhRiseIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes snhFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.card {
+    background: linear-gradient(180deg, #ffffff 0%, #fdfefe 100%);
+}
+
+.card .card-header {
+    border-bottom: 1px solid #e4edf5;
+    background: linear-gradient(180deg, #ffffff 0%, #f9fcff 100%);
+}
+
+.card-title,
+.card-header > .card-title,
+.card-header h3 {
+    font-weight: 700;
+    color: #1e3648;
+}
+
+.dashboard .small-box {
+    background: linear-gradient(145deg, #ffffff 0%, #f6fbf8 100%);
+}
+
+.dashboard .small-box .icon {
+    opacity: 0.18;
+    top: 8px;
+    right: 12px;
+}
+
+.dashboard .small-box h3,
+.dashboard .small-box p {
+    color: #163646;
+}
+
+.card .table td,
+.card .table th,
+.table td,
+.table th {
+    border-color: #e5edf4;
+    vertical-align: middle;
+}
+
+.table thead th,
+.table thead td {
+    background: #f3f8fc;
+    color: #264259;
+    font-weight: 700;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background: rgba(64, 120, 168, 0.035);
+}
+
+.btn,
+.btn-sm,
+.btn-group-sm > .btn {
+    border-radius: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1px;
+}
+
+.btn-primary,
+.btn-success,
+.btn-info {
+    border: 0;
+    box-shadow: 0 8px 18px rgba(33, 85, 61, 0.2);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #2f6c4f 0%, #3f8864 100%);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #2d8a57 0%, #3ca96a 100%);
+}
+
+.btn-info {
+    background: linear-gradient(135deg, #2f7a91 0%, #3a95b1 100%);
+}
+
+.btn-secondary {
+    border-color: #b5c5d4;
+    color: #22445c;
+    background: #f8fbfe;
+}
+
+.btn:hover,
+.btn:focus {
+    transform: translateY(-1px);
+}
+
+.form-control,
+.custom-select,
+select,
+textarea {
+    border-color: #cddaea;
+    border-radius: 10px;
+    min-height: 42px;
+    color: #1d3446;
+}
+
+.form-control:focus,
+.custom-select:focus,
+select:focus,
+textarea:focus {
+    border-color: #58a77b;
+    box-shadow: 0 0 0 0.2rem rgba(66, 149, 104, 0.2);
+}
+
+.select2-container--default .select2-selection--single,
+.select2-container--default .select2-selection--multiple {
+    border-color: #cddaea;
+    border-radius: 10px;
+    min-height: 42px;
+}
+
+.content .breadcrumb {
+    background: var(--snh-surface-soft);
+    border: 1px solid #deebf5;
+    border-radius: 999px;
+    padding: 0.4rem 0.9rem;
+}
+
+.breadcrumb-item,
+.breadcrumb-item a {
+    color: #4f667b;
+    font-weight: 600;
+}
+
+.page-item.active .page-link {
+    color: #ffffff;
+    border-color: #2f6c4f;
+    background: #2f6c4f;
+}
+
+.main-footer {
+    border-top: 1px solid #dce7ef;
+    color: #4a6479;
+    font-weight: 600;
+}
+
+/* Custom login page styling for Jazzmin admin. */
+.login-page {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 18% 18%, rgba(212, 175, 55, 0.2) 0%, rgba(212, 175, 55, 0) 40%),
+        radial-gradient(circle at 82% 82%, rgba(56, 94, 62, 0.24) 0%, rgba(56, 94, 62, 0) 42%),
+        linear-gradient(145deg, #edf0f2 0%, #dfe5ea 100%);
+    color: #1f2937;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 22px;
+}
+
+.login-page .login-box {
+    width: 100%;
+    max-width: 440px;
+}
+
+.login-page .login-logo {
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.login-page .login-logo img,
+.login-page .login-logo .logo-light,
+.login-page .login-logo .logo-dark {
+    max-width: 172px;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+
+/* Restore Jazzmin light/dark toggle visibility so only one logo is shown. */
+.login-page .login-logo .logo-dark {
+    display: none;
+}
+
+html[data-bs-theme="dark"] .login-page .login-logo .logo-light {
+    display: none;
+}
+
+html[data-bs-theme="dark"] .login-page .login-logo .logo-dark {
+    display: block;
+}
+
+.login-page .card {
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.74);
+    box-shadow: 0 18px 36px rgba(17, 24, 39, 0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.login-page .login-card-body {
+    border-radius: 18px;
+    padding: 1.5rem;
+}
+
+.login-page .login-box-msg {
+    color: #334155;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.login-page .input-group .form-control,
+.login-page .input-group .input-group-text {
+    border: 1px solid #cfd8e3;
+    background: #f8fafc;
+}
+
+.login-page .input-group .form-control {
+    border-right: 0;
+    height: 46px;
+    color: #0f172a;
+}
+
+.login-page .input-group .form-control:focus {
+    border-color: #5b8e6d;
+    box-shadow: 0 0 0 0.2rem rgba(91, 142, 109, 0.2);
+    background: #ffffff;
+}
+
+.login-page .input-group .input-group-text {
+    border-left: 0;
+    color: #5b8e6d;
+}
+
+.login-page .btn {
+    height: 46px;
+    border-radius: 12px;
+    border: none;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    background: linear-gradient(135deg, #365f45 0%, #4f7a5c 100%);
+    box-shadow: 0 10px 20px rgba(54, 95, 69, 0.28);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.login-page .btn:hover,
+.login-page .btn:focus {
+    transform: translateY(-1px);
+    filter: brightness(1.04);
+    box-shadow: 0 13px 24px rgba(54, 95, 69, 0.35);
+}
+
+.login-page .callout.callout-danger {
+    border-left-color: #dc3545;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 991px) {
+    .content-header h1 {
+        font-size: 1.65rem;
+    }
+
+    .main-header .navbar .nav-link {
+        padding-left: 0.65rem;
+        padding-right: 0.65rem;
+    }
+
+    .card,
+    .small-box,
+    .info-box {
+        border-radius: 12px;
+    }
+}
+
+@media (max-width: 576px) {
+    .content-header h1 {
+        font-size: 1.35rem;
+    }
+
+    .login-page {
+        padding: 16px;
+    }
+
+    .login-page .login-logo img,
+    .login-page .login-logo .logo-light,
+    .login-page .login-logo .logo-dark {
+        max-width: 146px;
+    }
+
+    .login-page .login-card-body {
+        padding: 1.25rem;
+    }
+
+    .content .breadcrumb {
+        border-radius: 12px;
+    }
+}
