@@ -1,5 +1,5 @@
 # Trip Planner
-viskav
+vishal
 Django-based trip planner website with admin panel, packages, categories, and enquiry flow.
 
 This README provides a full deployment guide for:
