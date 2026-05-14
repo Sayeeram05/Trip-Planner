@@ -20,6 +20,6 @@ urlpatterns = [
     path("enquiry/", include("apps.enquiries.urls")),
 ]
 
-# Serve media files in development
-if settings.DEBUG:
+# Serve local media files in development when cloud media is disabled
+if settings.DEBUG and not settings.USE_CLOUDFLARE_R2:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

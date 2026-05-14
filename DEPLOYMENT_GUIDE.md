@@ -71,18 +71,38 @@ flowchart LR
 6. In Cloudflare Rules:
    - Optional: redirect `www` to apex or apex to `www` (pick one canonical host).
 
-## Stage 5: Production Validation Checklist
+## Stage 5: Cloudflare R2 Media Storage
+
+1. In Cloudflare, create an R2 bucket:
+   - Example name: `trip-planner-media`
+2. Create an R2 API token with read/write access to that bucket.
+3. Configure a custom media host in Cloudflare:
+   - Example: `media.yourdomain.com`
+4. Add/update Render environment variables:
+   - `USE_CLOUDFLARE_R2=True`
+   - `CLOUDFLARE_MEDIA_DOMAIN=media.yourdomain.com`
+   - `CLOUDFLARE_R2_BUCKET_NAME=trip-planner-media`
+   - `CLOUDFLARE_R2_ENDPOINT_URL=https://<account-id>.r2.cloudflarestorage.com`
+   - `CLOUDFLARE_R2_MEDIA_LOCATION=uploads` (optional prefix)
+   - `CLOUDFLARE_R2_ACCESS_KEY_ID=<secret>`
+   - `CLOUDFLARE_R2_SECRET_ACCESS_KEY=<secret>`
+5. Redeploy the Render service.
+6. Upload new images through Django admin and confirm they are written to R2.
+
+## Stage 6: Production Validation Checklist
 
 1. `DEBUG=False` in Render.
 2. App responds over HTTPS only.
 3. Admin login works through Cloudflare domain.
-4. Images and static files load correctly.
-5. New enquiry submissions save in DB.
-6. No CSRF errors on forms.
-7. Health endpoint returns `{"status": "ok"}`.
-8. Restart the Render service and confirm data still exists (proves disk persistence).
+4. Static files load correctly from app domain.
+5. Uploaded images load from media domain (for example `https://media.yourdomain.com/...`).
+6. New image uploads appear in Cloudflare R2 bucket.
+7. New enquiry submissions save in DB.
+8. No CSRF errors on forms.
+9. Health endpoint returns `{"status": "ok"}`.
+10. Restart the Render service and confirm data still exists (proves disk persistence).
 
-## Stage 6: Continuous Deployment Workflow
+## Stage 7: Continuous Deployment Workflow
 
 1. Develop locally and test.
 2. Push to GitHub main branch.
@@ -99,8 +119,9 @@ flowchart LR
 3. Render deploy
 4. Run migrations on Render shell
 5. Smoke test via Cloudflare domain
-6. Confirm analytics/logs and error rate
-7. Verify SQLite file remains on `/var/data/db.sqlite3`
+6. Validate new image upload and media URL delivery via Cloudflare media domain
+7. Confirm analytics/logs and error rate
+8. Verify SQLite file remains on `/var/data/db.sqlite3`
 
 ## Notes for this project
 
@@ -109,4 +130,5 @@ flowchart LR
    - `DATABASE_URL` (optional, for SQLite URL usage)
 - Production security settings are automatically enabled when `DEBUG=False`.
 - Static assets use WhiteNoise compressed manifest storage for deployment.
+- Uploaded media can use Cloudflare R2 when `USE_CLOUDFLARE_R2=True`.
 - Do not use ephemeral SQLite at `/app` in production; use Render Disk path under `/var/data`.

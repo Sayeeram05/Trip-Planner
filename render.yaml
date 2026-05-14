@@ -25,3 +25,17 @@ services:
         value: https://trip-planner.onrender.com
       - key: RENDER_EXTERNAL_HOSTNAME
         value: trip-planner.onrender.com
+      - key: USE_CLOUDFLARE_R2
+        value: "False"
+      - key: CLOUDFLARE_MEDIA_DOMAIN
+        value: media.yourdomain.com
+      - key: CLOUDFLARE_R2_BUCKET_NAME
+        value: trip-planner-media
+      - key: CLOUDFLARE_R2_ENDPOINT_URL
+        value: https://your-account-id.r2.cloudflarestorage.com
+      - key: CLOUDFLARE_R2_MEDIA_LOCATION
+        value: uploads
+      - key: CLOUDFLARE_R2_ACCESS_KEY_ID
+        sync: false
+      - key: CLOUDFLARE_R2_SECRET_ACCESS_KEY
+        sync: false
