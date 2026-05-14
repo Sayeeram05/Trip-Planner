@@ -20,15 +20,15 @@ services:
       - key: SECRET_KEY
         generateValue: true
       - key: ALLOWED_HOSTS
-        value: trip-planner.onrender.com
+        value: srinarpaviholidays.in,www.srinarpaviholidays.in,trip-planner.onrender.com
       - key: CSRF_TRUSTED_ORIGINS
-        value: https://trip-planner.onrender.com
+        value: https://srinarpaviholidays.in,https://www.srinarpaviholidays.in,https://trip-planner.onrender.com
       - key: RENDER_EXTERNAL_HOSTNAME
-        value: trip-planner.onrender.com
+        value: srinarpaviholidays.in
       - key: USE_CLOUDFLARE_R2
         value: "False"
       - key: CLOUDFLARE_MEDIA_DOMAIN
-        value: media.yourdomain.com
+        value: media.srinarpaviholidays.in
       - key: CLOUDFLARE_R2_BUCKET_NAME
         value: trip-planner-media
       - key: CLOUDFLARE_R2_ENDPOINT_URL

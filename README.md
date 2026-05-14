@@ -104,9 +104,9 @@ Set these in Render Environment:
 DEBUG=False
 DATABASE_URL=
 SQLITE_PATH=/opt/render/project/src/db.sqlite3
-ALLOWED_HOSTS=your-render-service.onrender.com,yourdomain.com,www.yourdomain.com
-CSRF_TRUSTED_ORIGINS=https://your-render-service.onrender.com,https://yourdomain.com,https://www.yourdomain.com
-RENDER_EXTERNAL_HOSTNAME=your-render-service.onrender.com
+ALLOWED_HOSTS=srinarpaviholidays.in,www.srinarpaviholidays.in,trip-planner.onrender.com
+CSRF_TRUSTED_ORIGINS=https://srinarpaviholidays.in,https://www.srinarpaviholidays.in,https://trip-planner.onrender.com
+RENDER_EXTERNAL_HOSTNAME=srinarpaviholidays.in
 SECRET_KEY=your-production-secret-key
 DJANGO_SUPERUSER_USERNAME=admin
 DJANGO_SUPERUSER_EMAIL=admin@example.com
@@ -191,15 +191,15 @@ In Cloudflare DNS, add:
 ### Step 5: Optional redirect rule
 
 1. Pick canonical host strategy:
-   - `yourdomain.com` to `www.yourdomain.com`, or
-   - `www.yourdomain.com` to `yourdomain.com`
+   - `srinarpaviholidays.in` to `www.srinarpaviholidays.in`, or
+   - `www.srinarpaviholidays.in` to `srinarpaviholidays.in`
 2. Add one redirect rule in Cloudflare Rules.
 
 ### Step 6: Update app host settings
 
 Ensure Render env values include your final domain set:
 
-1. `ALLOWED_HOSTS` includes `yourdomain.com` and `www.yourdomain.com`.
+1. `ALLOWED_HOSTS` includes `srinarpaviholidays.in` and `www.srinarpaviholidays.in`.
 2. `CSRF_TRUSTED_ORIGINS` includes HTTPS origins for both hosts.
 
 ## 5A. Cloudflare R2 setup for uploaded images (recommended)
@@ -220,9 +220,9 @@ Use this section to move Django media uploads from local storage to Cloudflare R
 
 ### Step 3: Configure custom media domain
 
-1. Add DNS record in Cloudflare for `media.yourdomain.com`.
+1. Add DNS record in Cloudflare for `media.srinarpaviholidays.in`.
 2. Configure Cloudflare R2 custom domain for the bucket to use that host.
-3. Ensure HTTPS works on `https://media.yourdomain.com`.
+3. Ensure HTTPS works on `https://media.srinarpaviholidays.in`.
 
 ### Step 4: Add Render environment variables
 
@@ -230,7 +230,7 @@ Set these in Render Environment:
 
 ```env
 USE_CLOUDFLARE_R2=True
-CLOUDFLARE_MEDIA_DOMAIN=media.yourdomain.com
+CLOUDFLARE_MEDIA_DOMAIN=media.srinarpaviholidays.in
 CLOUDFLARE_R2_BUCKET_NAME=trip-planner-media
 CLOUDFLARE_R2_ENDPOINT_URL=https://your-account-id.r2.cloudflarestorage.com
 CLOUDFLARE_R2_MEDIA_LOCATION=uploads
@@ -253,7 +253,7 @@ Notes:
    - Package cover image
    - Package gallery image
 3. Confirm files appear in R2 bucket under the configured prefix.
-4. Open website pages and verify image URLs load from `https://media.yourdomain.com/...`.
+4. Open website pages and verify image URLs load from `https://media.srinarpaviholidays.in/...`.
 
 ### Step 6: Scope of this rollout
 
@@ -333,7 +333,7 @@ Fix:
 Fix:
 
 1. Verify `USE_CLOUDFLARE_R2=True` in Render.
-2. Ensure `CLOUDFLARE_MEDIA_DOMAIN` is set (example: `media.yourdomain.com`).
+2. Ensure `CLOUDFLARE_MEDIA_DOMAIN` is set (example: `media.srinarpaviholidays.in`).
 3. Upload a new image after deploy and retest.
 
 ## 9. Security notes

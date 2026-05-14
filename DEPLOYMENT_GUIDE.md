@@ -44,8 +44,8 @@ flowchart LR
 3. Render will detect [render.yaml](render.yaml).
 4. In Render environment variables, set:
    - `SQLITE_PATH` = `/var/data/db.sqlite3`
-   - `ALLOWED_HOSTS` = `your-render-service.onrender.com,yourdomain.com,www.yourdomain.com`
-   - `CSRF_TRUSTED_ORIGINS` = `https://your-render-service.onrender.com,https://yourdomain.com,https://www.yourdomain.com`
+   - `ALLOWED_HOSTS` = `srinarpaviholidays.in,www.srinarpaviholidays.in,trip-planner.onrender.com`
+   - `CSRF_TRUSTED_ORIGINS` = `https://srinarpaviholidays.in,https://www.srinarpaviholidays.in,https://trip-planner.onrender.com`
    - `RENDER_EXTERNAL_HOSTNAME` = `your-render-service.onrender.com`
 5. Deploy the service.
 6. Open Render Shell and run:
@@ -77,10 +77,10 @@ flowchart LR
    - Example name: `trip-planner-media`
 2. Create an R2 API token with read/write access to that bucket.
 3. Configure a custom media host in Cloudflare:
-   - Example: `media.yourdomain.com`
+   - Example: `media.srinarpaviholidays.in`
 4. Add/update Render environment variables:
    - `USE_CLOUDFLARE_R2=True`
-   - `CLOUDFLARE_MEDIA_DOMAIN=media.yourdomain.com`
+   - `CLOUDFLARE_MEDIA_DOMAIN=media.srinarpaviholidays.in`
    - `CLOUDFLARE_R2_BUCKET_NAME=trip-planner-media`
    - `CLOUDFLARE_R2_ENDPOINT_URL=https://<account-id>.r2.cloudflarestorage.com`
    - `CLOUDFLARE_R2_MEDIA_LOCATION=uploads` (optional prefix)
@@ -95,7 +95,7 @@ flowchart LR
 2. App responds over HTTPS only.
 3. Admin login works through Cloudflare domain.
 4. Static files load correctly from app domain.
-5. Uploaded images load from media domain (for example `https://media.yourdomain.com/...`).
+5. Uploaded images load from media domain (for example `https://media.srinarpaviholidays.in/...`).
 6. New image uploads appear in Cloudflare R2 bucket.
 7. New enquiry submissions save in DB.
 8. No CSRF errors on forms.
